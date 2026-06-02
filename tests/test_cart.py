@@ -7,7 +7,7 @@ from playwright.sync_api import sync_playwright
 from pages.cart_page import CartPage
 
 
-def run():
+def test_cart():
 
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(headless=False)
@@ -43,13 +43,13 @@ def run():
         # Esperar navegación
         page.wait_for_timeout(3000)
 
+        page.screenshot(
+            path="screenshots/cart.png"
+        )
+
         # Validar URL del carrito
         assert "cart" in page.url.lower()
 
         print("CART FLOW TEST PASSED")
 
         browser.close()
-
-
-if __name__ == "__main__":
-    run()

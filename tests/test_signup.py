@@ -7,7 +7,7 @@ from playwright.sync_api import sync_playwright
 from pages.signup_page import SignUpPage
 
 
-def run():
+def test_signUp():
 
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(headless=False)
@@ -24,7 +24,7 @@ def run():
         signup.sign_up(
             first_name="German",
             last_name="Soto",
-            email="german123@test.com",
+            email="german2000@test.com",
             password="Password123!"
         )
 
@@ -33,6 +33,11 @@ def run():
 
         # Validar que cambió la URL
         current_url = signup.get_current_url()
+        # page.wait_for_load_state("networkidle")
+
+        page.screenshot(
+            path="screenshots/signup.png"
+        )
 
         assert current_url != "https://storedemo.testdino.com/signup", \
             f"Expected navigation after sign up but stayed on {current_url}"
@@ -40,7 +45,3 @@ def run():
         print("TEST PASSED")
 
         browser.close()
-
-
-if __name__ == "__main__":
-    run()

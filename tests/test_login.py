@@ -7,7 +7,8 @@ from playwright.sync_api import sync_playwright
 from pages.login_page import LoginPage
 
 
-def run():
+# def run():
+def test_login():
 
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(headless=False)
@@ -24,12 +25,16 @@ def run():
 
         # Realizar login
         login.login(
-            "test@test.com",
-            "123456"
+            "german2000@test.com",
+            "Password123!"
         )
 
         # Esperar un momento después del login
         page.wait_for_timeout(3000)
+
+        page.screenshot(
+            path="screenshots/login.png"
+        )
 
         # Validar que la URL cambió luego del login
         assert "login" not in page.url.lower()
@@ -37,7 +42,3 @@ def run():
         print("LOGIN TEST PASSED")
 
         browser.close()
-
-
-if __name__ == "__main__":
-    run()
